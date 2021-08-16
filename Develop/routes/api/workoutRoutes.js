@@ -22,7 +22,7 @@ router.get("/api/workouts", (req, res) => {
         });
 });
 
-// route to create new workout
+// create new workout
 router.post("/api/workouts", (req, res) => {
     Workout.create(req.body)
         .then((workoutsdb) => {
@@ -31,6 +31,39 @@ router.post("/api/workouts", (req, res) => {
         .catch((err) => {
             res.json(err);
         });
+
+    // add exercises
+    router.put("/api/workouts/:id", ({ params, body }, res) => {
+
+        Workout.findOneAndUpdate({ _id: params.id }, { $push: { exercises: body } }, { new: true })
+            .then((workoutsdb) => {
+                res.json(workoutsdb);
+            })
+            .catch((err) => {
+                res.json(err);
+            });
+    });
+
+    // workouts within the last seven days
+    router.get("/api/workouts/range", (req, res) => {
+        Workout.aggregate([{
+                $addFields: {
+                    totalDuration: {
+                        $sum: "$exercises.duration",
+                    },
+                },
+            }, ])
+            .sort({ _id: -1 })
+            .limit(7)
+            .then((workoutsdb) => {
+                console.log(workoutsdb);
+                res.json(workoutsdb);
+            })
+            .catch((err) => {
+                res.json(err);
+            });
+    });
+
 });
 
 
