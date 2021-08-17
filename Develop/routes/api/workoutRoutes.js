@@ -14,8 +14,8 @@ router.get("/api/workouts", (req, res) => {
                 },
             },
         }, ])
-        .then((workoutsdb) => {
-            res.json(workoutsdb);
+        .then((workoutdb) => {
+            res.json(workoutdb);
         })
         .catch((err) => {
             res.json(err);
@@ -25,8 +25,8 @@ router.get("/api/workouts", (req, res) => {
 // create new workout
 router.post("/api/workouts", (req, res) => {
     Workout.create(req.body)
-        .then((workoutsdb) => {
-            res.json(workoutsdb);
+        .then((workoutdb) => {
+            res.json(workoutdb);
         })
         .catch((err) => {
             res.json(err);
@@ -36,8 +36,8 @@ router.post("/api/workouts", (req, res) => {
     router.put("/api/workouts/:id", ({ params, body }, res) => {
 
         Workout.findOneAndUpdate({ _id: params.id }, { $push: { exercises: body } }, { new: true })
-            .then((workoutsdb) => {
-                res.json(workoutsdb);
+            .then((workoutdb) => {
+                res.json(workoutdb);
             })
             .catch((err) => {
                 res.json(err);
@@ -55,9 +55,9 @@ router.post("/api/workouts", (req, res) => {
             }, ])
             .sort({ _id: -1 })
             .limit(7)
-            .then((workoutsdb) => {
-                console.log(workoutsdb);
-                res.json(workoutsdb);
+            .then((workoutdb) => {
+                console.log(workoutdb);
+                res.json(workoutdb);
             })
             .catch((err) => {
                 res.json(err);
