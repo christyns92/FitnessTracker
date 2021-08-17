@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 
+const db = require("./models/Workout.js")
+
 app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
