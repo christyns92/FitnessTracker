@@ -18,20 +18,9 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutsdb", {
     useNewUrlParser: true,
 });
 
-app.use(require("./routes/api-routes.js"));
-
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/index.html"));
-});
-
-app.get("/exercise", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/exercise.html"));
-});
-
-app.get("/stats", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/stats.html"));
-});
+app.use(require("./routes/apiRoutes.js"));
 
 app.listen(PORT, () => {
     console.log("App running on port 3001!");
 });
+module.exports = db;
